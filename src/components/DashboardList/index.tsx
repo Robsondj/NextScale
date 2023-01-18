@@ -1,7 +1,8 @@
 import classNames from "../../utils/classNames";
+import { ScaleType } from "../../types/ScaleType";
 
-const DashboardList = () => {
-  const scaleList = [
+const DashboardList = (): JSX.Element => {
+  const scaleList: ScaleType[] = [
     {
       id: 1,
       department: "Música",
@@ -35,7 +36,7 @@ const DashboardList = () => {
         "4Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's",
     },
   ];
-  console.log(scaleList);
+
   return (
     <div className="rounded-lg border-4 border-solid border-gray-200">
       {scaleList.map((item, index) => (
