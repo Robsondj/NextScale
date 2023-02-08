@@ -1,6 +1,5 @@
 import Header from "../components/Header";
 import DashboardList from "../components/DashboardList";
-import DashboardDetail from "../components/DashboardDetail";
 
 const Dashboard = () => {
   return (
@@ -26,10 +25,7 @@ const Dashboard = () => {
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             {/* Replace with your content */}
             <div className="px-4 py-6 ">
-              <div className="md:grid md:grid-cols-2 md:gap-2">
-                <DashboardList />
-                <DashboardDetail />
-              </div>
+              <DashboardList />
             </div>
             {/* /End replace */}
           </div>
