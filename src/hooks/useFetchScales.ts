@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ScaleType, UseFetchScalesType, UseFetchType } from "../types/types";
+import { ScaleType, UseFetchScalesType, UseFetchType } from "../types";
 import useFetch from "./useFetch";
 
 const useFetchScales = (): UseFetchScalesType => {
@@ -11,7 +11,7 @@ const useFetchScales = (): UseFetchScalesType => {
   useEffect(() => {
     const scaleMap = new Map();
     const scaleArray: Array<ScaleType> = [];
-    data.forEach(item => {
+    data && data.forEach(item => {
 
       if (item?.attributes?.idpeople?.data === null) {
         return;

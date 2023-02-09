@@ -1,30 +1,33 @@
-import { type } from "os";
-import { useEffect, useState } from "react";
-import { ScaleType } from "../../types/types";
+import { ScaleType } from "../../types";
+import Image from "next/image";
 
 type ScaleProps = {
   scale: ScaleType;
 };
 
 const DashboardDetail = ({ scale }: ScaleProps): JSX.Element => {
-  const [scaleObj, setScaleObj] = useState({});
-
-  useEffect(() => {
-    setScaleObj(scale);
-  }, [scale]);
-
   return (
-    <div
-      id="scale"
-      className="rounded-lg border-4 border-dashed border-gray-200 bg-gray-200"
-    >
+    <div className="flex justify-center">
       {scale && (
-        <div className="h-[90%] text-3xl grid grid-cols-1 divide-y">
-          <div className="ml-2 mt-2">Departamento: {scale.department.name}</div>
-          <div className="ml-2 mt-2">Função: {scale.people[0].role.name}</div>
-          <div className="ml-2 mt-2">Data: {scale.date}</div>
-          <div className="ml-2 mt-2">
-            Observação: {scale.description.substring(0, 50)}
+        <div className="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg">
+          <Image
+            className="w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg"
+            src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg"
+            alt=""
+          />
+          <div className="p-6 flex flex-col justify-start">
+            <h5 className="text-gray-900 text-xl font-medium mb-2">
+              Scale for {scale.date}
+            </h5>
+            <p className="text-gray-700 text-base mb-4">
+              Departamento: {scale.department.name}
+            </p>
+            <p className="text-gray-700 text-base mb-4">
+              Função: {scale.people[0].role.name}
+            </p>
+            <p className="text-gray-600 text-xs">
+              Observação: {scale.description.substring(0, 50)}
+            </p>
           </div>
         </div>
       )}

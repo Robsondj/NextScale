@@ -25,12 +25,12 @@ export interface DepartmentInterface extends DefaultType {
 
 export type UseFetchScalesType = {
     scales: Array<ScaleType>
-    error: Object
+    error: Object | undefined
     loading: boolean
 }
 
 export type UseFetchType = {
-    data: Array<Object>,
-    error: Object,
+    data: Array<any> | undefined,
+    error: Object | undefined,
     loading: boolean
 }

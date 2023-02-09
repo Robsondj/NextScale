@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { UseFetchType } from "../types/types"
+import { UseFetchType } from "../types"
 
 const useFetch = (url: string): UseFetchType => {
 
-    const [data, setData] = useState([{}])
-    const [error, setError] = useState({})
-    const [loading, setLoading] = useState(true)
+    const [data, setData] = useState()
+    const [error, setError] = useState()
+    const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
         fetch(`${process.env.NEXT_PUBLIC_URL_API}${url}`)
@@ -18,6 +18,7 @@ const useFetch = (url: string): UseFetchType => {
             })
             .catch((err) => {
                 setError(err)
+                setLoading(false)
             });
     }, [url])
 
