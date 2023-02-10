@@ -21,40 +21,40 @@ const DashboardList = (): JSX.Element => {
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
             <div className="overflow-hidden">
-              <table className="min-w-full">
-                <thead className="bg-white border-b">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                    >
-                      #
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                    >
-                      Departamento
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                    >
-                      Função
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                    >
-                      Data
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {loading && <div>Loading...</div>}
-                  {error && <div>Something went wrong</div>}
-                  {scales &&
-                    scales.map((item) => (
+              {loading && <div>Loading...</div>}
+              {error && <div>Something went wrong</div>}
+              {scales && (
+                <table className="min-w-full">
+                  <thead className="bg-white border-b">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      >
+                        #
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      >
+                        Departamento
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      >
+                        Função
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      >
+                        Data
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {scales.map((item) => (
                       <tr
                         key={item.id}
                         className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100"
@@ -74,8 +74,9 @@ const DashboardList = (): JSX.Element => {
                         </td>
                       </tr>
                     ))}
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              )}
             </div>
           </div>
         </div>
