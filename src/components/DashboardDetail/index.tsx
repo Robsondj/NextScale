@@ -7,14 +7,9 @@ type ScaleProps = {
 
 const DashboardDetail = ({ scale }: ScaleProps): JSX.Element => {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mt-6">
       {scale && (
-        <div className="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg">
-          <Image
-            className="w-full h-96 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg"
-            src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg"
-            alt=""
-          />
+        <div className="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg min-w-[50%]">
           <div className="p-6 flex flex-col justify-start">
             <h5 className="text-gray-900 text-xl font-medium mb-2">
               Scale for {scale.date}
