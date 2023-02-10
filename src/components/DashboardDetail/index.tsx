@@ -1,5 +1,4 @@
 import { ScaleType } from "../../types";
-import Image from "next/image";
 
 type ScaleProps = {
   scale: ScaleType;
@@ -12,7 +11,7 @@ const DashboardDetail = ({ scale }: ScaleProps): JSX.Element => {
         <div className="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg min-w-[50%]">
           <div className="p-6 flex flex-col justify-start">
             <h5 className="text-gray-900 text-xl font-medium mb-2">
-              Scale for {scale.date}
+              Escala do Dia {scale.date} - {scale.dayOfWeek}
             </h5>
             <p className="text-gray-700 text-base mb-4">
               Departamento: {scale.department.name}

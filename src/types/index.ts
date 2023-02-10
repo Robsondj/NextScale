@@ -10,6 +10,7 @@ export type ScaleType = {
     department: DepartmentInterface,
     people: Array<PeopleInterface>
     date: string,
+    dayOfWeek: string,
     description: string,
 }
 

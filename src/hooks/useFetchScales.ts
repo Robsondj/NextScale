@@ -11,17 +11,21 @@ const useFetchScales = (): UseFetchScalesType => {
   useEffect(() => {
     const scaleMap = new Map();
     const scaleArray: Array<ScaleType> = [];
+    const weekDay = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
     data && data.forEach(item => {
 
       if (item?.attributes?.idpeople?.data === null) {
         return;
       }
       let scaleObject = scaleMap.get(item?.attributes?.idscales?.data.id);
-      const formatedDate = new Date(item?.attributes?.idscales?.data.attributes.date).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
+      const formatedDate = new Date(item?.attributes?.idscales?.data.attributes.date).toLocaleDateString('pt-BR', {timeZone: 'UTC'});
+      const dateUTC = new Date(item?.attributes?.idscales?.data.attributes.date);
+      const dayOfWeek = dateUTC.getUTCDay();
       if (typeof scaleObject  === "undefined") {
         scaleObject = {};
         scaleObject.id = item?.attributes?.idscales?.data.id;
         scaleObject.date = formatedDate;
+        scaleObject.dayOfWeek = weekDay[dayOfWeek];
         scaleObject.description = item?.attributes?.idscales?.data.attributes.description;
         scaleObject.department = {
           id: item?.attributes?.idscales?.data.attributes.iddepartments.data.id,
