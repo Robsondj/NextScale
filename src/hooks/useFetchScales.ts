@@ -17,10 +17,11 @@ const useFetchScales = (): UseFetchScalesType => {
         return;
       }
       let scaleObject = scaleMap.get(item?.attributes?.idscales?.data.id);
+      const formatedDate = new Date(item?.attributes?.idscales?.data.attributes.date).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
       if (typeof scaleObject  === "undefined") {
         scaleObject = {};
         scaleObject.id = item?.attributes?.idscales?.data.id;
-        scaleObject.date = item?.attributes?.idscales?.data.attributes.date;
+        scaleObject.date = formatedDate;
         scaleObject.description = item?.attributes?.idscales?.data.attributes.description;
         scaleObject.department = {
           id: item?.attributes?.idscales?.data.attributes.iddepartments.data.id,
