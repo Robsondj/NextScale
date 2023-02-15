@@ -20,8 +20,7 @@ export interface PeopleInterface extends DefaultType {
 }
 
 export interface DepartmentInterface extends DefaultType {
-    id: number,
-    name: string,
+    
 }
 
 export type UseFetchScalesType = {
