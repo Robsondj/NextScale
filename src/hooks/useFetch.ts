@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 import { UseFetchType } from "../types"
 
-const useFetch = (url: string): UseFetchType => {
+const useFetch = (url: string, method: string): UseFetchType => {
 
     const [data, setData] = useState()
     const [error, setError] = useState()
     const [loading, setLoading] = useState<boolean>(true)
 
+
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_URL_API}${url}`)
+        fetch(`${process.env.NEXT_PUBLIC_URL_API}${url}`, {
+            method: method,
+            headers: {
+                ["Content-Type"]: "application/json",
+                Authorization: `Bearer ${process.env.API_TOKEN}`
+            }
+          })
             .then((serverResponse) => {
                 return serverResponse.json();
             })
@@ -20,9 +27,16 @@ const useFetch = (url: string): UseFetchType => {
                 setError(err)
                 setLoading(false)
             });
-    }, [url])
+    }, [url, method])
 
     return { data, error, loading }
 }
 
-export default useFetch;
+const useGetFetch = (url: string): UseFetchType => useFetch(url, "GET")
+
+const usePostFetch = (url: string): UseFetchType => useFetch(url, "POST")
+
+export  {
+    useGetFetch,
+    usePostFetch
+};
