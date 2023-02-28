@@ -34,3 +34,21 @@ export type UseFetchType = {
     error: Object | undefined,
     loading: boolean
 }
+
+export type UseFetchDataType = {
+    data: PostReturnedDataType | undefined,
+    error: Object | undefined,
+    saveFetch: Function,
+    deleteFetch: Function,
+}
+
+type AttributesDefault = {
+    name: string,
+    createdAt: string,
+    updatedAt: string
+} 
+
+export type PostReturnedDataType = {
+    id: number,
+    attributes: AttributesDefault
+}
