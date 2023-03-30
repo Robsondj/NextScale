@@ -35,9 +35,15 @@ export type UseFetchType = {
     loading: boolean
 }
 
+export type ErrorType = {
+    message: string
+}
+
 export type UseFetchDataType = {
     data: PostReturnedDataType | undefined,
-    error: Object | undefined,
+    success: string | undefined,
+    loading: boolean,
+    error: string | undefined,
     saveFetch: Function,
     deleteFetch: Function,
 }

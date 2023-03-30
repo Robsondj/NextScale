@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { UseFetchType, UseFetchDataType, PostReturnedDataType } from "../types"
+import { UseFetchType, UseFetchDataType, PostReturnedDataType, ErrorType } from "../types"
 
 const useFetch = (url: string, method: string): UseFetchType => {
 
@@ -39,9 +39,14 @@ const useGetFetch = (url: string): UseFetchType => useFetch(url, "GET")
 const usePostFetch = (url: string): UseFetchDataType => {
 
     const [data, setData] = useState<PostReturnedDataType | undefined>()
-    const [error, setError] = useState()
+    const [error, setError] = useState<undefined | string>(undefined)
+    const [success, setSuccess] = useState<undefined | string>(undefined)
+    const [loading, setLoading] = useState<boolean>(false)
 
     const handleFetch = (method: string, body: Object, id: number | undefined) => {
+        setLoading(true)
+        setError(undefined)
+        setSuccess(undefined)
         fetch(`${process.env.NEXT_PUBLIC_URL_API}${url}${id ? id : ""}`, {
             method: method,
             headers: {
@@ -51,13 +56,20 @@ const usePostFetch = (url: string): UseFetchDataType => {
             body: JSON.stringify(body)
           })
             .then((serverResponse) => {
-                return serverResponse.json();
+                if (serverResponse.status == 200) {
+                    return serverResponse.json();
+                }
+                setError("Houve um erro ao salvar os dados.");
             })
             .then((response) => {
+                setLoading(false)
+                setSuccess("Dados salvos com sucesso!")
                 setData(response.data);
             })
-            .catch((err) => {
-                setError(err)
+            .catch((err: ErrorType) => {
+                setLoading(false)
+                console.log("Request Error", err.message)
+                setError("Houve um erro ao comunicar com a API.")
             });
     }
 
@@ -72,6 +84,8 @@ const usePostFetch = (url: string): UseFetchDataType => {
 
     return {
         data,
+        success,
+        loading,
         error,
         saveFetch,
         deleteFetch

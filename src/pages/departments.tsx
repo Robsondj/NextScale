@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
-import { DepartmentInterface, PostReturnedDataType } from "../types";
+import { DepartmentInterface } from "../types";
 import { usePostFetch } from "../hooks/useFetch";
 import useForm from "../hooks/useForm";
+import {
+  NotificationSuccess,
+  NotificationError,
+} from "../components/Notification";
 
 const Departments = (): JSX.Element => {
   const initialFormValues: Partial<DepartmentInterface> = {};
   const { formValues, handleChange, clearForm } =
     useForm<Partial<DepartmentInterface>>(initialFormValues);
-  const { data, error, saveFetch, deleteFetch } =
+  const { data, success, loading, error, saveFetch, deleteFetch } =
     usePostFetch("api/departments/");
 
   const handleSave = () => {
@@ -19,6 +23,8 @@ const Departments = (): JSX.Element => {
     };
     saveFetch(department, data?.id);
   };
+
+  console.log("Error", error);
 
   return (
     <>
@@ -37,28 +43,13 @@ const Departments = (): JSX.Element => {
               <div>
                 <div className="md:grid md:grid-cols-3 md:gap-6">
                   <div className="mt-5 md:col-span-3 md:mt-0">
+                    {loading && <div>Loading...</div>}
+                    {!loading && <NotificationSuccess message={success} />}
+                    {!loading && <NotificationError message={error} />}
                     <form action="#" method="POST">
                       <div className="overflow-hidden shadow sm:rounded-md">
                         <div className="bg-white px-4 py-5 sm:p-6">
                           <div className="grid grid-cols-6 gap-6">
-                            <div className="col-span-6 sm:col-span-1">
-                              <label
-                                htmlFor="first-name"
-                                className="block text-sm font-medium text-gray-700"
-                              >
-                                Código
-                              </label>
-                              <input
-                                readOnly={true}
-                                type="text"
-                                name="first-name"
-                                id="first-name"
-                                autoComplete="given-name"
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                value={formValues.id}
-                              />
-                            </div>
-
                             <div className="col-span-6 sm:col-span-4">
                               <label
                                 htmlFor="last-name"
