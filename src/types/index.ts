@@ -19,9 +19,11 @@ export interface PeopleInterface extends DefaultType {
     role: RoleInterface
 }
 
-export interface DepartmentInterface extends DefaultType {
-    
-}
+export interface DepartmentInterface extends DefaultType {}
+
+export interface RoleDepartmentInterface extends DefaultType {
+    department: string
+} 
 
 export type UseFetchScalesType = {
     scales: Array<ScaleType>
@@ -57,4 +59,10 @@ type AttributesDefault = {
 export type PostReturnedDataType = {
     id: number,
     attributes: AttributesDefault
+}
+
+export type UseFetchDepartmentType = {
+    departments: Array<DepartmentInterface>
+    error: Object | undefined
+    loading: boolean
 }

@@ -1,27 +1,36 @@
-import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
-import { DepartmentInterface } from "../types";
+import { DepartmentInterface, RoleDepartmentInterface } from "../types";
 import { usePostFetch } from "../hooks/useFetch";
+import useFetchDepartments from "../hooks/useFetchDepartments";
 import useForm from "../hooks/useForm";
 import {
   NotificationSuccess,
   NotificationError,
 } from "../components/Notification";
 
-const Departments = (): JSX.Element => {
-  const initialFormValues: Partial<DepartmentInterface> = {};
+const Roles = (): JSX.Element => {
+  const initialFormValues: Partial<RoleDepartmentInterface> = {};
   const { formValues, handleChange, clearForm } =
-    useForm<Partial<DepartmentInterface>>(initialFormValues);
+    useForm<Partial<RoleDepartmentInterface>>(initialFormValues);
   const { data, success, loading, error, saveFetch, deleteFetch } =
-    usePostFetch("departments/");
+    usePostFetch("role-departments/");
+  const { departments } = useFetchDepartments();
+  const departmentsNames: Array<string> | undefined = departments?.map(
+    ({ name }) => name
+  );
+  const hasDepartments = Boolean(departments.length);
 
   const handleSave = () => {
-    const department = {
+    const roleDepartment: DepartmentInterface | undefined = departments.find(
+      (department) => department.name === formValues.department
+    );
+    const role = {
       data: {
         name: formValues.name,
+        iddepartments: roleDepartment?.id,
       },
     };
-    saveFetch(department, data?.id);
+    saveFetch(role, data?.id);
   };
 
   console.log("Error", error);
@@ -33,7 +42,7 @@ const Departments = (): JSX.Element => {
         <header className="bg-white shadow">
           <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-              Departamentos
+              Função
             </h1>
           </div>
         </header>
@@ -69,6 +78,44 @@ const Departments = (): JSX.Element => {
                             </div>
                           </div>
                         </div>
+                        <div className="bg-white px-4 py-5 sm:p-6">
+                          <div className="grid grid-cols-6 gap-6">
+                            <div className="col-span-6 sm:col-span-4">
+                              <label
+                                htmlFor="last-name"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+                                Departamento
+                              </label>
+                              <input
+                                type="text"
+                                name="department"
+                                id="department"
+                                value={formValues.department}
+                                onChange={(event) => handleChange(event.target)}
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                autoComplete={hasDepartments ? "on" : "off"}
+                                list={
+                                  hasDepartments
+                                    ? "suggestionFor_department"
+                                    : undefined
+                                }
+                              />
+                              {hasDepartments && (
+                                <datalist id={`suggestionFor_department`}>
+                                  {departmentsNames.map((name) => (
+                                    <option
+                                      value={name}
+                                      key={`suggestionFor_department_option${name}`}
+                                    >
+                                      {name}
+                                    </option>
+                                  ))}
+                                </datalist>
+                              )}
+                            </div>
+                          </div>
+                        </div>
                         <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
                           <button
                             type="button"
@@ -98,4 +145,4 @@ const Departments = (): JSX.Element => {
   );
 };
 
-export default Departments;
+export default Roles;

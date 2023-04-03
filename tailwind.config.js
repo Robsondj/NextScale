@@ -8,4 +8,16 @@ module.exports = {
     extend: {},
   },
   plugins: [require("@tailwindcss/forms")],
+  variants: {
+    extend: {
+      textColor: [
+        "responsive",
+        "dark",
+        "group-hover",
+        "focus-within",
+        "hover",
+        "focus",
+      ],
+    },
+  },
 };

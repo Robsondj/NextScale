@@ -5,7 +5,7 @@ import { getBrDateFormat, getDayOfWeek } from "../utils"
 
 const useFetchScales = (): UseFetchScalesType => {
   const idUser = 1;
-  const urlScalesByUser = `api/scales-peoples?populate[idscales][populate][0]=iddepartments&populate[idpeople][filters][id][$eq]=${idUser}&populate[idrole_departments][populate]`;
+  const urlScalesByUser = `scales-peoples?populate[idscales][populate][0]=iddepartments&populate[idpeople][filters][id][$eq]=${idUser}&populate[idrole_departments][populate]`;
   const {data, error, loading}: UseFetchType = useGetFetch(urlScalesByUser);
   const [scales, setScales] = useState<Array<ScaleType>>([]);
 
