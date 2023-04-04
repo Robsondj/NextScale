@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { classNames } from "../../utils";
 
 type NotificationProps = {
@@ -18,7 +18,7 @@ const NotificationAlert = ({
       if (alertType !== "error") {
         setTimeout(() => {
           setVisible(false);
-        }, 10000);
+        }, 100000);
       }
     };
 
@@ -27,21 +27,37 @@ const NotificationAlert = ({
     }
   }, [alertType, message]);
 
-  const alertColor = () => {
-    switch (alertType) {
-      case "success":
-        return "green";
-      case "error":
-        return "red";
-      case "warning":
-        return "yellow";
-      case "notice":
-        return "blue";
+  let textColor: string = "";
+  let backgroundColor: string = "";
+  let buttonColor: string = "";
 
-      default:
-        break;
-    }
-  };
+  switch (alertType) {
+    case "success":
+      textColor = "text-green-700";
+      backgroundColor = "bg-green-100";
+      buttonColor =
+        "focus:ring-green-400 hover:bg-green-200 dark:text-green-400";
+      break;
+    case "error":
+      textColor = "text-red-700";
+      backgroundColor = "bg-red-100";
+      buttonColor = "focus:ring-red-400 hover:bg-red-200 dark:text-red-400";
+      break;
+    case "warning":
+      textColor = "text-yellow-700";
+      backgroundColor = "bg-yellow-100";
+      buttonColor =
+        "focus:ring-yellow-400 hover:bg-yellow-200 dark:text-yellow-400";
+      break;
+    case "notice":
+      textColor = "text-blue-700";
+      backgroundColor = "bg-blue-100";
+      buttonColor = "focus:ring-blue-400 hover:bg-blue-200 dark:text-blue-400";
+      break;
+
+    default:
+      break;
+  }
 
   const svgIcon = () => {
     switch (alertType) {
@@ -65,9 +81,9 @@ const NotificationAlert = ({
         <div
           className={classNames(
             "mb-3 inline-flex w-full items-center rounded-lg",
-            `bg-${alertColor()}-100`,
+            backgroundColor,
             "py-5 px-6 text-base,",
-            `text-${alertColor()}-700`
+            textColor
           )}
           role="alert"
         >
@@ -84,7 +100,12 @@ const NotificationAlert = ({
           <div className="ml-3 text-sm font-medium">{message}</div>
           <button
             type="button"
-            className={`ml-auto -mx-1.5 -my-1.5 bg-${alertColor()}-100 text-${alertColor()}-700 rounded-lg focus:ring-2 focus:ring-${alertColor()}-400 p-1.5 hover:bg-${alertColor()}-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-${alertColor()}-400 dark:hover:bg-gray-700`}
+            className={classNames(
+              "ml-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 inline-flex h-8 w-8 dark:bg-gray-800 dark:hover:bg-gray-700",
+              backgroundColor,
+              textColor,
+              buttonColor
+            )}
             data-dismiss-target="#alert-border-3"
             aria-label="Close"
             onClick={() => setVisible(false)}
