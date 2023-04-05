@@ -18,7 +18,7 @@ const NotificationAlert = ({
       if (alertType !== "error") {
         setTimeout(() => {
           setVisible(false);
-        }, 100000);
+        }, 10000);
       }
     };
 
