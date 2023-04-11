@@ -13,8 +13,13 @@ const getDayOfWeek = (date: string) => {
     return weekDay[dayOfWeek];
 }
 
+const getProperty = <T, K extends keyof T>(obj: T, key: K): any => {
+    return obj[key];
+}
+
 export {
     classNames,
     getBrDateFormat,
-    getDayOfWeek
+    getDayOfWeek,
+    getProperty
 }
