@@ -14,6 +14,7 @@ const navigation = [
   { name: "Escalas", href: "#", current: false },
   { name: "Pessoas", href: "#", current: false },
   { name: "Departamentos", href: "/departments", current: false },
+  { name: "Funçoes", href: "/roles", current: false },
   { name: "Usuários", href: "#", current: false },
 ];
 const userNavigation = [
