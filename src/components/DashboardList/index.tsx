@@ -1,6 +1,7 @@
-import { ScaleType, UseFetchScalesType } from "../../types";
+import { ScaleType, UseFetchScalesType, ColumnsType } from "../../types";
 import useFetchScales from "../../hooks/useFetchScales";
 import DashboardDetail from "../../components/DashboardDetail";
+import TableList from "../TableList";
 import { useEffect, useState } from "react";
 
 const DashboardList = (): JSX.Element => {
@@ -15,6 +16,25 @@ const DashboardList = (): JSX.Element => {
     setScaleDetail(item);
   };
 
+  const columns: Array<ColumnsType<ScaleType>> = [
+    {
+      header: "#",
+      field: ({ id }) => id.toString(),
+    },
+    {
+      header: "Departamento",
+      field: ({ department }) => department.name,
+    },
+    {
+      header: "Função",
+      field: ({ people }) => people[0].role.name,
+    },
+    {
+      header: "Data",
+      field: ({ date }) => date,
+    },
+  ];
+
   return (
     <>
       <div className="flex flex-col">
@@ -24,58 +44,11 @@ const DashboardList = (): JSX.Element => {
               {loading && <div>Loading...</div>}
               {error && <div>Something went wrong</div>}
               {scales && (
-                <table className="min-w-full">
-                  <thead className="bg-white border-b">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                      >
-                        #
-                      </th>
-                      <th
-                        scope="col"
-                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                      >
-                        Departamento
-                      </th>
-                      <th
-                        scope="col"
-                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                      >
-                        Função
-                      </th>
-                      <th
-                        scope="col"
-                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                      >
-                        Data
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {scales.map((item) => (
-                      <tr
-                        key={item.id}
-                        className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100"
-                        onClick={() => handleDashBoardDetail(item)}
-                      >
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          {item.id}
-                        </td>
-                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          {item.department.name}
-                        </td>
-                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          {item.people[0].role.name}
-                        </td>
-                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                          {item.date}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <TableList
+                  columns={columns}
+                  data={scales}
+                  handleClick={handleDashBoardDetail}
+                />
               )}
             </div>
           </div>

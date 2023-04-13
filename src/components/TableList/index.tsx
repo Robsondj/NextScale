@@ -1,23 +1,23 @@
-import { getProperty } from "../../utils";
+import { ColumnsType } from "../../types";
 
-type ColumnsType = {
-  dataKey: string;
-  header: string;
+type PropsType<T> = {
+  columns: Array<ColumnsType<T>>;
+  data: Array<T>;
+  handleClick: (arg: T) => void;
 };
 
-type TableListProps = {
-  columns: Array<ColumnsType>;
-  data: Array<Object>;
-};
-
-const TableList = ({ columns, data }: TableListProps): JSX.Element => {
+const TableList = <T extends unknown>({
+  columns,
+  data,
+  handleClick,
+}: PropsType<T>): JSX.Element => {
   return (
     <table className="min-w-full">
       <thead className="bg-white border-b">
         <tr>
-          {columns.map((column: ColumnsType) => (
+          {columns.map((column, idx) => (
             <th
-              key={column.header}
+              key={idx}
               scope="col"
               className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
             >
@@ -27,21 +27,18 @@ const TableList = ({ columns, data }: TableListProps): JSX.Element => {
         </tr>
       </thead>
       <tbody>
-        {data.map((item: Object, key: number) => (
+        {data.map((item: T, idx_item) => (
           <tr
-            key={getProperty(item, columns[0].dataKey)}
+            key={idx_item}
             className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100"
-            // onClick={() => handleDashBoardDetail(item)}
+            onClick={() => handleClick(item)}
           >
-            {columns.map((column: ColumnsType) => (
+            {columns.map((column, idx_column) => (
               <td
-                key={`${getProperty(item, columns[0].dataKey)}_${getProperty(
-                  item,
-                  column.dataKey
-                )}`}
+                key={idx_column}
                 className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
               >
-                {getProperty(item, column.dataKey)}
+                {column.field(item)}
               </td>
             ))}
           </tr>

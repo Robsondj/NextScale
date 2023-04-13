@@ -66,3 +66,8 @@ export type UseFetchDepartmentType = {
     error: Object | undefined
     loading: boolean
 }
+
+export type ColumnsType<T> = {
+    header: string;
+    field: (item: T) => string;
+}
