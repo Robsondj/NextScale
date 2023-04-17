@@ -22,7 +22,7 @@ export interface PeopleInterface extends DefaultType {
 export interface DepartmentInterface extends DefaultType {}
 
 export interface RoleDepartmentInterface extends DefaultType {
-    department: string
+    department: DepartmentInterface
 } 
 
 export type UseFetchScalesType = {
@@ -68,6 +68,12 @@ export type UseFetchDepartmentType = {
 }
 
 export type ColumnsType<T> = {
-    header: string;
-    field: (item: T) => string;
+    header: string,
+    field: (item: T) => string
+}
+
+export type UseFetchRolesType = {
+    roles: Array<RoleDepartmentInterface>,
+    error: Object | undefined,
+    loading: boolean
 }

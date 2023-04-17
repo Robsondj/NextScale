@@ -1,12 +1,12 @@
-import Header from "../components/Header";
-import { DepartmentInterface, RoleDepartmentInterface } from "../types";
-import { usePostFetch } from "../hooks/useFetch";
-import useFetchDepartments from "../hooks/useFetchDepartments";
-import useForm from "../hooks/useForm";
+import Header from "../../components/Header";
+import { DepartmentInterface, RoleDepartmentInterface } from "../../types";
+import { usePostFetch } from "../../hooks/useFetch";
+import useFetchDepartments from "../../hooks/useFetchDepartments";
+import useForm from "../../hooks/useForm";
 import {
   NotificationSuccess,
   NotificationError,
-} from "../components/Notification";
+} from "../../components/Notification";
 
 const Roles = (): JSX.Element => {
   const initialFormValues: Partial<RoleDepartmentInterface> = {};
@@ -22,7 +22,7 @@ const Roles = (): JSX.Element => {
 
   const handleSave = () => {
     const roleDepartment: DepartmentInterface | undefined = departments.find(
-      (department) => department.name === formValues.department
+      (department) => department.name === formValues.department?.name
     );
     const role = {
       data: {
@@ -91,7 +91,7 @@ const Roles = (): JSX.Element => {
                                 type="text"
                                 name="department"
                                 id="department"
-                                value={formValues.department}
+                                value={formValues.department?.name}
                                 onChange={(event) => handleChange(event.target)}
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 autoComplete={hasDepartments ? "on" : "off"}
