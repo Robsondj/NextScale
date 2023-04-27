@@ -14,7 +14,7 @@ import { useFetchPost } from "../../../hooks/useFetchWithRepository";
 
 const Roles = (): JSX.Element => {
   const initialFormValues: Partial<RoleDepartmentInterface> = {};
-  const { formValues, handleChange, setFormValues } =
+  const { formValues, handleChange, handleChangeSelect } =
     useForm<Partial<RoleDepartmentInterface>>(initialFormValues);
   console.log("INITIAL", formValues);
   const { data, success, loading, error, fetchAction } =
@@ -24,14 +24,6 @@ const Roles = (): JSX.Element => {
 
   const router = useRouter();
   const { query } = router;
-
-  //Move this to the general form
-  const handleChangeSelect = (target: HTMLSelectElement) => {
-    const department: DepartmentInterface | undefined = departments.find(
-      (department) => department.id === parseInt(target.value)
-    );
-    setFormValues({ ...formValues, department });
-  };
 
   useEffect(() => {
     if (success) {
@@ -96,8 +88,12 @@ const Roles = (): JSX.Element => {
                               <select
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 value={formValues.department?.id}
+                                name="department"
                                 onChange={(event) =>
-                                  handleChangeSelect(event.target)
+                                  handleChangeSelect<DepartmentInterface>(
+                                    event.target,
+                                    departments
+                                  )
                                 }
                               >
                                 {departments.map((department) => (

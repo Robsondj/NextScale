@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DepartmentInterface, PeopleInterface } from "../types"
+import { GenericObjectWithId } from "../types";
 
 const useForm = <T>(initialValues: T) => {
     const [formValues, setFormValues] = useState<T>(initialValues)
@@ -17,6 +17,13 @@ const useForm = <T>(initialValues: T) => {
         )
     }
 
+    const handleChangeSelect = <T extends GenericObjectWithId>(target: HTMLSelectElement, selectData: Array<T>) => {
+        const data: T | undefined = selectData.find(
+          (data) => data?.id === parseInt(target.value)
+        );
+        setFormValues({ ...formValues, [target.name]: data });
+    };
+
     const clearForm = () => {
         setFormValues(initialValues)
     }
@@ -24,6 +31,7 @@ const useForm = <T>(initialValues: T) => {
     return {
         formValues,
         handleChange,
+        handleChangeSelect,
         clearForm,
         setFormValues
     }

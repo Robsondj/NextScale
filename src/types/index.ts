@@ -96,3 +96,7 @@ export interface RepositoryInterface<T> {
     update(data: T, id: number): Promise<T>;
     remove(id: number): Promise<void>;
 }
+
+export type GenericObjectWithId = {
+    id: number
+}
