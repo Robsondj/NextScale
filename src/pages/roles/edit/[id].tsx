@@ -1,39 +1,55 @@
-import Header from "../../components/Header";
-import { DepartmentInterface, RoleDepartmentInterface } from "../../types";
-import { usePostFetch } from "../../hooks/useFetch";
-import useFetchDepartments from "../../hooks/useFetchDepartments";
-import useForm from "../../hooks/useForm";
+import Header from "../../../components/Header";
+import { DepartmentInterface, RoleDepartmentInterface } from "../../../types";
+import { usePostFetch } from "../../../hooks/useFetch";
+import useFetchDepartments from "../../../hooks/useFetchDepartments";
+import useForm from "../../../hooks/useForm";
 import {
   NotificationSuccess,
   NotificationError,
-} from "../../components/Notification";
+} from "../../../components/Notification";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import roleDepartmentRepository from "../../../repositories/roleDepartmentRepository";
+import { useFetchPut } from "../../../hooks/useFetchWithRepository";
 
 const Roles = (): JSX.Element => {
   const initialFormValues: Partial<RoleDepartmentInterface> = {};
-  const { formValues, handleChange, clearForm } =
+  const { formValues, handleChange, clearForm, setFormValues } =
     useForm<Partial<RoleDepartmentInterface>>(initialFormValues);
-  const { data, success, loading, error, saveFetch, deleteFetch } =
-    usePostFetch("role-departments/");
-  const { departments } = useFetchDepartments();
-  const departmentsNames: Array<string> | undefined = departments?.map(
-    ({ name }) => name
-  );
-  const hasDepartments = Boolean(departments.length);
+  console.log("INITIAL", formValues);
+  const { data, success, loading, error, fetchAction } =
+    useFetchPut<RoleDepartmentInterface>(roleDepartmentRepository);
 
-  const handleSave = () => {
-    const roleDepartment: DepartmentInterface | undefined = departments.find(
-      (department) => department.name === formValues.department?.name
+  const { departments } = useFetchDepartments();
+
+  const router = useRouter();
+  const { query } = router;
+
+  //Move this to the general form
+  const handleChangeSelect = (target: HTMLSelectElement) => {
+    const department: DepartmentInterface | undefined = departments.find(
+      (department) => department.id === parseInt(target.value)
     );
-    const role = {
-      data: {
-        name: formValues.name,
-        iddepartments: roleDepartment?.id,
-      },
-    };
-    saveFetch(role, data?.id);
+    setFormValues({ ...formValues, department });
   };
 
-  console.log("Error", error);
+  useEffect(() => {
+    if (query?.id) {
+      roleDepartmentRepository
+        .getById(parseInt(Array.isArray(query.id) ? query.id[0] : query.id))
+        .then((data) => {
+          setFormValues(data);
+        });
+    }
+  }, [query, setFormValues]);
+
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        router.push("/roles/");
+      }, 3000);
+    }
+  }, [success, router]);
 
   return (
     <>
@@ -87,46 +103,38 @@ const Roles = (): JSX.Element => {
                               >
                                 Departamento
                               </label>
-                              <input
-                                type="text"
-                                name="department"
-                                id="department"
-                                value={formValues.department?.name}
-                                onChange={(event) => handleChange(event.target)}
+                              <select
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                autoComplete={hasDepartments ? "on" : "off"}
-                                list={
-                                  hasDepartments
-                                    ? "suggestionFor_department"
-                                    : undefined
+                                value={formValues.department?.id}
+                                onChange={(event) =>
+                                  handleChangeSelect(event.target)
                                 }
-                              />
-                              {hasDepartments && (
-                                <datalist id={`suggestionFor_department`}>
-                                  {departmentsNames.map((name) => (
-                                    <option
-                                      value={name}
-                                      key={`suggestionFor_department_option${name}`}
-                                    >
-                                      {name}
-                                    </option>
-                                  ))}
-                                </datalist>
-                              )}
+                              >
+                                {departments.map((department) => (
+                                  <option
+                                    key={department.id}
+                                    value={department.id}
+                                  >
+                                    {department.name}
+                                  </option>
+                                ))}
+                              </select>
                             </div>
                           </div>
                         </div>
                         <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
                           <button
                             type="button"
-                            onClick={() => handleSave()}
+                            onClick={() =>
+                              fetchAction(formValues, formValues?.id)
+                            }
                             className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                           >
                             Save
                           </button>
                           <button
                             type="button"
-                            onClick={() => deleteFetch(data?.id)}
+                            onClick={() => console.log(formValues?.id)}
                             className="inline-flex justify-center rounded-md border border-transparent bg-red-600	 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                           >
                             Delete

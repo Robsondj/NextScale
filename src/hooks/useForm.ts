@@ -24,7 +24,8 @@ const useForm = <T>(initialValues: T) => {
     return {
         formValues,
         handleChange,
-        clearForm
+        clearForm,
+        setFormValues
     }
 }
 

@@ -31,8 +31,14 @@ export type UseFetchScalesType = {
     loading: boolean
 }
 
-export type UseFetchType = {
-    data: Array<any> | undefined,
+export type UseFetchType<T> = {
+    data: T | undefined,
+    error: Object | undefined,
+    loading: boolean
+}
+
+export type UseFetchArrayType<T> = {
+    data: Array<T> | undefined,
     error: Object | undefined,
     loading: boolean
 }
@@ -41,13 +47,12 @@ export type ErrorType = {
     message: string
 }
 
-export type UseFetchDataType = {
-    data: PostReturnedDataType | undefined,
+export type UseFetchDataType<T> = {
+    data: T | undefined,
     success: string | undefined,
     loading: boolean,
     error: string | undefined,
-    saveFetch: Function,
-    deleteFetch: Function,
+    fetchAction: Function,
 }
 
 type AttributesDefault = {
@@ -76,4 +81,18 @@ export type UseFetchRolesType = {
     roles: Array<RoleDepartmentInterface>,
     error: Object | undefined,
     loading: boolean
+}
+
+export type UseFetchRoleType = {
+    role: RoleDepartmentInterface | undefined,
+    error: Object | undefined,
+    loading: boolean
+}
+
+export interface RepositoryInterface<T> {
+    getAll(): Promise<T[]>;
+    getById(id: number): Promise<T>;
+    create(data: T): Promise<T>;
+    update(data: T, id: number): Promise<T>;
+    remove(id: number): Promise<void>;
 }

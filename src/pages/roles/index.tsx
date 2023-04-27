@@ -1,13 +1,15 @@
 import Header from "../../components/Header";
 import { RoleDepartmentInterface, ColumnsType } from "../../types";
-import { usePostFetch } from "../../hooks/useFetch";
-import useFetchRoles from "../../hooks/useFetchRoles";
+import { useFetchAll } from "../../hooks/useFetchWithRepository";
 import TableList from "../../components/TableList";
+import { useRouter } from "next/router";
+import roleDepartmentRepository from "../../repositories/roleDepartmentRepository";
 
 const Roles = (): JSX.Element => {
-  const { data, success, loading, error, saveFetch, deleteFetch } =
-    usePostFetch("role-departments/");
-  const { roles } = useFetchRoles();
+  const { data, error, loading } = useFetchAll<RoleDepartmentInterface>(
+    roleDepartmentRepository
+  );
+  const router = useRouter();
 
   const columns: Array<ColumnsType<RoleDepartmentInterface>> = [
     {
@@ -23,6 +25,10 @@ const Roles = (): JSX.Element => {
       field: ({ department }) => department.name,
     },
   ];
+
+  const handleClick = (item: RoleDepartmentInterface) => {
+    router.push(`/roles/edit/${item.id}`);
+  };
 
   return (
     <>
@@ -42,13 +48,20 @@ const Roles = (): JSX.Element => {
                 <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                   <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
                     <div className="overflow-hidden">
+                      <button
+                        type="button"
+                        onClick={() => router.push("/roles/new/")}
+                        className="inline-flex justify-center rounded-md border border-transparent bg-sky-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+                      >
+                        New
+                      </button>
                       {loading && <div>Loading...</div>}
                       {error && <div>Something went wrong</div>}
-                      {roles && (
+                      {data && (
                         <TableList
                           columns={columns}
-                          data={roles}
-                          handleClick={(item) => item}
+                          data={data}
+                          handleClick={handleClick}
                         />
                       )}
                     </div>
