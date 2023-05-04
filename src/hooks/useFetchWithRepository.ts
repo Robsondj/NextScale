@@ -1,6 +1,6 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { UseFetchType, UseFetchArrayType, UseFetchDataType } from "../types";
-import { RepositoryInterface } from "../types"
+import { RepositoryInterface, GenericObjectWithId } from "../types"
 
 const useFetchAll = <T>(repository: RepositoryInterface<T>): UseFetchArrayType<T> => {
 
@@ -73,15 +73,15 @@ const useFetchPost = <T>(repository: RepositoryInterface<T>): UseFetchDataType<T
     }
 }
 
-const useFetchPut = <T>(repository: RepositoryInterface<T>): UseFetchDataType<T> => {
+const useFetchPut = <T extends GenericObjectWithId>(repository: RepositoryInterface<T>): UseFetchDataType<T> => {
 
     const [data, setData] = useState<T>()
     const [error, setError] = useState<undefined | string>(undefined)
     const [success, setSuccess] = useState<undefined | string>(undefined)
     const [loading, setLoading] = useState<boolean>(false)
 
-    const fetchAction = (dataUpdate: T, id: number) => {
-        repository.update(dataUpdate, id)
+    const fetchAction = (dataUpdate: T) => {
+        repository.update(dataUpdate, dataUpdate.id)
             .then((data) => {
                 setLoading(false)
                 setSuccess("Dados atualizados com sucesso!")
