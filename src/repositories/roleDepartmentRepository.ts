@@ -58,15 +58,7 @@ const create = (role: RoleDepartmentInterface): Promise<RoleDepartmentInterface>
         if (serverResponse.ok) {
             const data: any | undefined = await serverResponse.json().then((response: any) => response.data);
             let role: RoleDepartmentInterface;
-            // create a  function to convert cast the return
-            role = {
-                    id: data?.id,
-                    name: data?.attributes?.name,
-                    department: {
-                        id: data?.attributes?.iddepartments?.data.id,
-                        name: data?.attributes?.iddepartments?.data.attributes.name
-                    } as DepartmentInterface
-                } as RoleDepartmentInterface;
+            role = castData(data);
             return new Promise((resolve, reject) => {
                 resolve(role)
             });
@@ -84,15 +76,7 @@ const update = (role: RoleDepartmentInterface, id: number): Promise<RoleDepartme
         if (serverResponse.ok) {
             const data: any | undefined = await serverResponse.json().then((response: any) => response.data);
             let role: RoleDepartmentInterface;
-            // create a  function to convert cast the return
-            role = {
-                    id: data?.id,
-                    name: data?.attributes?.name,
-                    department: {
-                        id: data?.attributes?.iddepartments?.data.id,
-                        name: data?.attributes?.iddepartments?.data.attributes.name
-                    } as DepartmentInterface
-                } as RoleDepartmentInterface;
+            role = castData(data);
             return new Promise((resolve, reject) => {
                 resolve(role)
             });
@@ -120,5 +104,16 @@ const roleDepartmentRepository: RepositoryInterface<RoleDepartmentInterface> = {
     update,
     remove
 };
+
+const castData = (data: any | undefined) => {
+    return {
+        id: data?.id,
+        name: data?.attributes?.name,
+        department: {
+            id: data?.attributes?.iddepartments?.data.id,
+            name: data?.attributes?.iddepartments?.data.attributes.name
+        } as DepartmentInterface
+    } as RoleDepartmentInterface;
+}
 
 export default roleDepartmentRepository;
