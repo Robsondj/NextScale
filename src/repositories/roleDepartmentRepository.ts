@@ -10,14 +10,7 @@ const getAll = (): Promise<Array<RoleDepartmentInterface>> => {
                 const data: Array<any> | undefined = await serverResponse.json().then((response: any) => response.data);
                 const rolesArray : Array<RoleDepartmentInterface> = [];
                 data && data.forEach(item => {
-                    rolesArray.push({
-                        id: item.id,
-                        name: item?.attributes.name,
-                        department: {
-                            id: item?.attributes?.iddepartments?.data.id,
-                            name: item?.attributes?.iddepartments?.data.attributes.name
-                        } as DepartmentInterface
-                    } as RoleDepartmentInterface)
+                    rolesArray.push(castData(item))
                 });
                 return new Promise((resolve, reject) => {
                     resolve(rolesArray)
@@ -33,14 +26,7 @@ const getById = (id: number): Promise<RoleDepartmentInterface> => {
             if (serverResponse.ok) {
                 const data: any | undefined = await serverResponse.json().then((response: any) => response.data);
                 let role: RoleDepartmentInterface;
-                role = {
-                        id: data?.id,
-                        name: data?.attributes?.name,
-                        department: {
-                            id: data?.attributes?.iddepartments?.data.id,
-                            name: data?.attributes?.iddepartments?.data.attributes.name
-                        } as DepartmentInterface
-                    } as RoleDepartmentInterface;
+                role = castData(data);
                 return new Promise((resolve, reject) => {
                     resolve(role)
                 });
