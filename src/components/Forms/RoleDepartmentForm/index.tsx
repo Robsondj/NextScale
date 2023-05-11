@@ -4,7 +4,7 @@ import {
   RepositoryInterface,
   GenericObjectWithId,
 } from "../../../types";
-import useFetchDepartments from "../../../hooks/useFetchDepartments";
+import useDepartments from "../../../hooks/useDepartments";
 import useForm from "../../../hooks/useForm";
 import {
   NotificationSuccess,
@@ -28,7 +28,7 @@ const RoleDepartmentForm = ({ useFetch }: PropsType): JSX.Element => {
   const { success, loading, error, fetchAction } =
     useFetch<RoleDepartmentInterface>(roleDepartmentRepository);
 
-  const { departments } = useFetchDepartments();
+  const { departments } = useDepartments();
 
   const router = useRouter();
   const { query } = router;

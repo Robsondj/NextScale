@@ -27,7 +27,7 @@ const Roles = (): JSX.Element => {
   ];
 
   const handleClick = (item: RoleDepartmentInterface) => {
-    router.push(`/roles/edit/${item.id}`);
+    router.push(`/roles/${item.id}`);
   };
 
   return (

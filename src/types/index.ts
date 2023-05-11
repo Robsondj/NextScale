@@ -68,8 +68,6 @@ export type PostReturnedDataType = {
 
 export type UseFetchDepartmentType = {
     departments: Array<DepartmentInterface>
-    error: Object | undefined
-    loading: boolean
 }
 
 export type ColumnsType<T> = {

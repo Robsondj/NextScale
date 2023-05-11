@@ -1,6 +1,6 @@
-import Header from "../../../components/Header";
-import { useFetchPost } from "../../../hooks/useFetchWithRepository";
-import RoleDepartmentForm from "../../../components/Forms/RoleDepartmentForm";
+import Header from "../../components/Header";
+import { useFetchPost } from "../../hooks/useFetchWithRepository";
+import RoleDepartmentForm from "../../components/Forms/RoleDepartmentForm";
 
 const Roles = (): JSX.Element => {
   return (
