@@ -42,10 +42,10 @@ const create = (department: DepartmentInterface): Promise<DepartmentInterface> =
       .then(async (serverResponse) => {
         if (serverResponse.ok) {
             const data: any | undefined = await serverResponse.json().then((response: any) => response.data);
-            let role: DepartmentInterface;
-            role = castData(data);
+            let department: DepartmentInterface;
+            department = castData(data);
             return new Promise((resolve, reject) => {
-                resolve(role)
+                resolve(department)
             });
         }
         throw new Error("Houve um erro ao salvar os dados.");
