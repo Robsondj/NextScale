@@ -23,12 +23,6 @@ export interface DepartmentInterface extends DefaultType {}
 
 export interface RoleDepartmentInterface extends DefaultType {
     department: DepartmentInterface
-} 
-
-export type UseFetchScalesType = {
-    scales: Array<ScaleType>
-    error: Object | undefined
-    loading: boolean
 }
 
 export type UseFetchType<T> = {
@@ -43,27 +37,12 @@ export type UseFetchArrayType<T> = {
     loading: boolean
 }
 
-export type ErrorType = {
-    message: string
-}
-
 export type UseFetchDataType<T> = {
     data: T | undefined,
     success: string | undefined,
     loading: boolean,
     error: string | undefined,
     fetchAction: Function,
-}
-
-type AttributesDefault = {
-    name: string,
-    createdAt: string,
-    updatedAt: string
-} 
-
-export type PostReturnedDataType = {
-    id: number,
-    attributes: AttributesDefault
 }
 
 export type UseFetchDepartmentType = {
@@ -73,18 +52,6 @@ export type UseFetchDepartmentType = {
 export type ColumnsType<T> = {
     header: string,
     field: (item: T) => string
-}
-
-export type UseFetchRolesType = {
-    roles: Array<RoleDepartmentInterface>,
-    error: Object | undefined,
-    loading: boolean
-}
-
-export type UseFetchRoleType = {
-    role: RoleDepartmentInterface | undefined,
-    error: Object | undefined,
-    loading: boolean
 }
 
 export interface RepositoryInterface<T> {
