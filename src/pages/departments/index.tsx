@@ -1,6 +1,6 @@
 import Header from "../../components/Header";
 import { ColumnsType, DepartmentInterface } from "../../types";
-import { useFetchAll } from "../../hooks/useFetchWithRepository";
+import { useFetchAll } from "../../hooks/useFetch";
 import TableList from "../../components/TableList";
 import { useRouter } from "next/router";
 import departmentRepository from "../../repositories/departmentRepository";

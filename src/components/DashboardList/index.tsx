@@ -1,5 +1,5 @@
 import { ScaleType, UseFetchArrayType, ColumnsType } from "../../types";
-import { useFetchAll } from "../../hooks/useFetchWithRepository";
+import { useFetchAll } from "../../hooks/useFetch";
 import DashboardDetail from "../../components/DashboardDetail";
 import TableList from "../TableList";
 import { useEffect, useState } from "react";

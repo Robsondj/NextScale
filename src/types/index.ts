@@ -16,8 +16,11 @@ export type ScaleType = {
 
 export interface PeopleInterface extends DefaultType {
     email: string,
-    role: RoleInterface
+    role: RoleInterface,
+    profile: ProfileInterface,
 }
+
+export interface ProfileInterface extends DefaultType {}
 
 export interface DepartmentInterface extends DefaultType {}
 

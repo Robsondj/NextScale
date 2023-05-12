@@ -1,6 +1,6 @@
 import Header from "../../components/Header";
 import DepartmentForm from "../../components/Forms/DepartmentForm";
-import { useFetchPut } from "../../hooks/useFetchWithRepository";
+import { useFetchPut } from "../../hooks/useFetch";
 
 const Departments = (): JSX.Element => {
   return (

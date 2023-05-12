@@ -1,5 +1,5 @@
 import Header from "../../components/Header";
-import { useFetchPost } from "../../hooks/useFetchWithRepository";
+import { useFetchPost } from "../../hooks/useFetch";
 import DepartmentForm from "../../components/Forms/DepartmentForm";
 
 const Department = (): JSX.Element => {
