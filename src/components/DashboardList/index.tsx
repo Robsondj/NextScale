@@ -1,16 +1,18 @@
-import { ScaleType, UseFetchScalesType, ColumnsType } from "../../types";
-import useFetchScales from "../../hooks/useFetchScales";
+import { ScaleType, UseFetchArrayType, ColumnsType } from "../../types";
+import { useFetchAll } from "../../hooks/useFetchWithRepository";
 import DashboardDetail from "../../components/DashboardDetail";
 import TableList from "../TableList";
 import { useEffect, useState } from "react";
+import scaleRepository from "../../repositories/scaleRepository";
 
 const DashboardList = (): JSX.Element => {
-  const { scales, error, loading }: UseFetchScalesType = useFetchScales();
+  const { data, error, loading }: UseFetchArrayType<ScaleType> =
+    useFetchAll<ScaleType>(scaleRepository);
   const [scaleDetail, setScaleDetail] = useState<ScaleType>();
 
   useEffect(() => {
-    setScaleDetail(scales[0]);
-  }, [scales]);
+    setScaleDetail(data?.[0]);
+  }, [data]);
 
   const handleDashBoardDetail = (item: ScaleType) => {
     setScaleDetail(item);
@@ -43,10 +45,10 @@ const DashboardList = (): JSX.Element => {
             <div className="overflow-hidden">
               {loading && <div>Loading...</div>}
               {error && <div>Something went wrong</div>}
-              {scales && (
+              {data && (
                 <TableList
                   columns={columns}
-                  data={scales}
+                  data={data}
                   handleClick={handleDashBoardDetail}
                 />
               )}

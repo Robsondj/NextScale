@@ -4,7 +4,7 @@ import { RepositoryInterface, GenericObjectWithId } from "../types"
 
 const useFetchAll = <T>(repository: RepositoryInterface<T>): UseFetchArrayType<T> => {
 
-    const [data, setData] = useState<Array<T>>()
+    const [data, setData] = useState<Array<T>>([])
     const [error, setError] = useState()
     const [loading, setLoading] = useState<boolean>(true)
 
