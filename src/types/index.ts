@@ -20,6 +20,13 @@ export interface PeopleInterface extends DefaultType {
     profile: ProfileInterface,
 }
 
+export interface PeopleWithPasswordInterface extends DefaultType {
+    email: string,
+    password: string,
+    role: RoleInterface,
+    profile: ProfileInterface,
+}
+
 export interface ProfileInterface extends DefaultType {}
 
 export interface DepartmentInterface extends DefaultType {}
